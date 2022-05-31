@@ -32,7 +32,12 @@ function App({ username }) {
   if (!userData) return null;
 
   if (userData)
-    return <Profile userData={userData} />;
+    return (
+      <>
+        <h1>Github User</h1>
+        <Profile userData={userData} />
+      </>
+    );
 
   return <div>No data found for {username}</div>;
 }
