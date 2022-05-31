@@ -1,45 +1,31 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { 
+  Home, 
+  About,
+  Services,
+  CompanyHistory,
+  CompanyLocation,
+  Events, 
+  Contact, 
+  Whoops404 } from "./pages"
 
-function Profile({ userData }) {
-  return (
+function App() {
+  return(
     <div>
-      <h1>{userData.name}</h1>
-      <p>{userData.location}</p>
-      <img src={userData.avatar_url} alt={userData.login} width={160} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} >
+          <Route path="services" element={<Services />} />
+          <Route path="history" element={<CompanyHistory />} />
+          <Route path="location" element={<CompanyLocation />} />
+        </Route>
+        <Route path="/events" element={<Events />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<Whoops404 />} />
+      </Routes>
     </div>
   );
-}
-
-function App({ username }) {
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (!username) return;
-    setLoading(true);
-    setTimeout(() => {
-      fetch(`https://api.github.com/users/${username}`)
-        .then(response => response.json())
-        .then(setUserData)
-        .then(setLoading(false))
-        .catch(setError);
-    }, 3000)
-  }, [username]);
-
-  if (loading) return <h1>Loading...</h1>;
-  if (error) return <pre>{JSON.stringify(error, null, 2)}</pre>
-  if (!userData) return null;
-
-  if (userData)
-    return (
-      <>
-        <h1>Github User</h1>
-        <Profile userData={userData} />
-      </>
-    );
-
-  return <div>No data found for {username}</div>;
 }
 
 export default App;

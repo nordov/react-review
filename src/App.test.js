@@ -3,7 +3,7 @@ import App from './App';
 
 test('Renders an h1', () => {
   const { getByText } =  render(<App />);
-  const h1 = getByText(/David/);
-  expect( h1 ).toHaveTextContent( "David" );
+  const h1 = getByText(/David Odio/);
+  expect(h1).toHaveTextContent( "David Odio" );
 
 });
